@@ -519,6 +519,63 @@ inc_stats(ns_client_t *client, isc_statscounter_t counter) {
 	}
 }
 
+static inline dns_cusstatstype_t
+get_cusstatstype(isc_statscounter_t counter,dns_rdatatype_t qtype) {
+
+	dns_cusstatstype_t custype = dns_custom_global_stats_a_invalid;
+
+	if (qtype == dns_rdatatype_a) {
+		if (counter == ns_statscounter_success) {
+			custype = dns_custom_global_stats_a_querysuccess;
+		} else {
+			custype = dns_custom_global_stats_a_queryfail;
+		}
+	} else if (qtype == dns_rdatatype_aaaa) {
+		if (counter == ns_statscounter_success) {
+			custype = dns_custom_global_stats_aaaa_querysuccess;
+		} else {
+			custype = dns_custom_global_stats_aaaa_queryfail;
+		}
+	} else if (qtype == dns_rdatatype_naptr) {
+		if (counter == ns_statscounter_success) {
+			custype = dns_custom_global_stats_naptr_querysuccess;
+		} else {
+			custype = dns_custom_global_stats_naptr_queryfail;
+		}
+	} else if (qtype == dns_rdatatype_srv) {
+		if (counter == ns_statscounter_success) {
+			custype = dns_custom_global_stats_srv_querysuccess;
+		} else {
+			custype = dns_custom_global_stats_srv_queryfail;
+		}
+	} else if (qtype == dns_rdatatype_soa) {
+		if (counter == ns_statscounter_success) {
+			custype = dns_custom_global_stats_soa_querysuccess;
+		} else {
+			custype = dns_custom_global_stats_soa_queryfail;
+		}
+	}
+
+	return custype;
+}
+
+/*
+ * Increment query statistics counters.
+ */
+static inline void
+inc_custom_stats(ns_client_t *client, isc_statscounter_t counter) {
+
+	dns_rdataset_t *rdataset;
+	dns_rdatatype_t qtype;
+	rdataset = ISC_LIST_HEAD(client->query.qname->list);
+	INSIST(rdataset != NULL);
+	client->query.qtype = qtype = rdataset->type;
+
+	dns_cusstatstype_t custype = get_cusstatstype(counter, qtype);	
+
+	ns_stats_increment(client->sctx->cusnsstats, custype);
+}
+
 static void
 query_send(ns_client_t *client) {
 	isc_statscounter_t counter;
@@ -549,6 +606,7 @@ query_send(ns_client_t *client) {
 	}
 
 	inc_stats(client, counter);
+	inc_custom_stats(client, counter);
 	ns_client_send(client);
 	isc_nmhandle_unref(client->handle);
 }

@@ -3937,6 +3937,54 @@ named_statschannels_shutdown(named_server_t *server) {
 }
 
 isc_result_t
+cus_stats_dump(named_server_t *server, FILE *fp) {
+	uint64_t totalNum = 0;
+	uint64_t successNum = 0;
+	uint64_t failNum = 0;
+	ns_stats_t *cusnsstats = server->sctx->cusnsstats;
+	
+	// A记录
+	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_a_querysuccess);
+	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_a_queryfail);
+	totalNum = successNum + failNum;
+	fprintf(fp, "     %d A\n", totalNum);
+	fprintf(fp, "     %d A success\n", successNum);
+	fprintf(fp, "     %d A fail\n", failNum);
+
+	// AAAA记录
+	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_aaaa_querysuccess);
+	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_aaaa_queryfail);
+	totalNum = successNum + failNum;
+	fprintf(fp, "     %d AAAA\n", totalNum);
+	fprintf(fp, "     %d AAAA success\n", successNum);
+	fprintf(fp, "     %d AAAA fail\n", failNum);
+
+	// NAPTR记录
+	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_naptr_querysuccess);
+	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_naptr_queryfail);
+	totalNum = successNum + failNum;
+	fprintf(fp, "     %d NAPTR\n", totalNum);
+	fprintf(fp, "     %d NAPTR success\n", successNum);
+	fprintf(fp, "     %d NAPTR fail\n", failNum);
+
+	// SRV记录
+	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_srv_querysuccess);
+	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_srv_queryfail);
+	totalNum = successNum + failNum;
+	fprintf(fp, "     %d SRV\n", totalNum);
+	fprintf(fp, "     %d SRV success\n", successNum);
+	fprintf(fp, "     %d SRV fail\n", failNum);
+
+	// SOA记录
+	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_soa_querysuccess);
+	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_soa_queryfail);
+	totalNum = successNum + failNum;
+	fprintf(fp, "     %d SOA\n", totalNum);
+	fprintf(fp, "     %d SOA success\n", successNum);
+	fprintf(fp, "     %d SOA fail\n", failNum);
+}
+
+isc_result_t
 named_stats_dump(named_server_t *server, FILE *fp) {
 	isc_stdtime_t now;
 	isc_result_t result;

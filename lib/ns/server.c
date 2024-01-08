@@ -57,6 +57,8 @@ ns_server_create(isc_mem_t *mctx, ns_matchview_t matchingview,
 
 	CHECKFATAL(ns_stats_create(mctx, ns_statscounter_max, &sctx->nsstats));
 
+	CHECKFATAL(ns_stats_create(mctx, ns_statscounter_max, &sctx->cusnsstats));
+
 	CHECKFATAL(dns_rdatatypestats_create(mctx, &sctx->rcvquerystats));
 
 	CHECKFATAL(dns_opcodestats_create(mctx, &sctx->opcodestats));

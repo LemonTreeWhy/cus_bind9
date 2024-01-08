@@ -108,6 +108,7 @@ struct ns_server {
 
 	/*% Stats counters */
 	ns_stats_t * nsstats;
+	ns_stats_t *cusnsstats;
 	dns_stats_t *rcvquerystats;
 	dns_stats_t *opcodestats;
 	dns_stats_t *rcodestats;
