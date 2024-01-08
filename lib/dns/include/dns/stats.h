@@ -18,24 +18,6 @@
 
 #include <dns/types.h>
 
-    /*%
-	 * custom statistics counters.
-	 */
-enum{
-    dns_custom_global_stats_a_invalid = 0,
-    dns_custom_global_stats_a_querysuccess = 1,
-    dns_custom_global_stats_a_queryfail = 2,
-    dns_custom_global_stats_aaaa_querysuccess = 3,
-    dns_custom_global_stats_aaaa_queryfail = 4,
-    dns_custom_global_stats_naptr_querysuccess = 5,
-    dns_custom_global_stats_naptr_queryfail = 6,
-    dns_custom_global_stats_srv_querysuccess = 7,
-    dns_custom_global_stats_srv_queryfail = 8,
-    dns_custom_global_stats_soa_querysuccess = 9,
-    dns_custom_global_stats_soa_queryfail = 10,
-    dns_custom_global_stats_srv_max = 11,
-};
-
 /*%
  * Statistics counters.  Used as isc_statscounter_t values.
  */
@@ -169,6 +151,22 @@ enum {
 	dns_gluecachestatscounter_inserts_absent = 3,
 
 	dns_gluecachestatscounter_max = 4,
+
+	/*
+	 * cus statistics counters.
+	 */
+	dns_custom_global_stats_a_invalid = 0,
+    dns_custom_global_stats_a_querysuccess = 1,
+    dns_custom_global_stats_a_queryfail = 2,
+    dns_custom_global_stats_aaaa_querysuccess = 3,
+    dns_custom_global_stats_aaaa_queryfail = 4,
+    dns_custom_global_stats_naptr_querysuccess = 5,
+    dns_custom_global_stats_naptr_queryfail = 6,
+    dns_custom_global_stats_srv_querysuccess = 7,
+    dns_custom_global_stats_srv_queryfail = 8,
+    dns_custom_global_stats_soa_querysuccess = 9,
+    dns_custom_global_stats_soa_queryfail = 10,
+    dns_custom_global_stats_srv_max = 11,
 };
 
 /*%

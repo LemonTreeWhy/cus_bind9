@@ -3947,41 +3947,41 @@ cus_stats_dump(named_server_t *server, FILE *fp) {
 	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_a_querysuccess);
 	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_a_queryfail);
 	totalNum = successNum + failNum;
-	fprintf(fp, "     %d A\n", totalNum);
-	fprintf(fp, "     %d A success\n", successNum);
-	fprintf(fp, "     %d A fail\n", failNum);
+	fprintf(fp, "     %ld A\n", totalNum);
+	fprintf(fp, "     %ld A success\n", successNum);
+	fprintf(fp, "     %ld A fail\n", failNum);
 
 	// AAAA记录
 	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_aaaa_querysuccess);
 	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_aaaa_queryfail);
 	totalNum = successNum + failNum;
-	fprintf(fp, "     %d AAAA\n", totalNum);
-	fprintf(fp, "     %d AAAA success\n", successNum);
-	fprintf(fp, "     %d AAAA fail\n", failNum);
+	fprintf(fp, "     %ld AAAA\n", totalNum);
+	fprintf(fp, "     %ld AAAA success\n", successNum);
+	fprintf(fp, "     %ld AAAA fail\n", failNum);
 
 	// NAPTR记录
 	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_naptr_querysuccess);
 	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_naptr_queryfail);
 	totalNum = successNum + failNum;
-	fprintf(fp, "     %d NAPTR\n", totalNum);
-	fprintf(fp, "     %d NAPTR success\n", successNum);
-	fprintf(fp, "     %d NAPTR fail\n", failNum);
+	fprintf(fp, "     %ld NAPTR\n", totalNum);
+	fprintf(fp, "     %ld NAPTR success\n", successNum);
+	fprintf(fp, "     %ld NAPTR fail\n", failNum);
 
 	// SRV记录
 	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_srv_querysuccess);
 	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_srv_queryfail);
 	totalNum = successNum + failNum;
-	fprintf(fp, "     %d SRV\n", totalNum);
-	fprintf(fp, "     %d SRV success\n", successNum);
-	fprintf(fp, "     %d SRV fail\n", failNum);
-
+	fprintf(fp, "     %ld SRV\n", totalNum);
+	fprintf(fp, "     %ld SRV success\n", successNum);
+	fprintf(fp, "     %ld SRV fail\n", failNum);
+l
 	// SOA记录
 	successNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_soa_querysuccess);
 	failNum = ns_stats_get_counter(cusnsstats, dns_custom_global_stats_soa_queryfail);
 	totalNum = successNum + failNum;
-	fprintf(fp, "     %d SOA\n", totalNum);
-	fprintf(fp, "     %d SOA success\n", successNum);
-	fprintf(fp, "     %d SOA fail\n", failNum);
+	fprintf(fp, "     %ld SOA\n", totalNum);
+	fprintf(fp, "     %ld SOA success\n", successNum);
+	fprintf(fp, "     %ld SOA fail\n", failNum);
 }
 
 isc_result_t
@@ -4006,6 +4006,9 @@ named_stats_dump(named_server_t *server, FILE *fp) {
 
 	isc_stdtime_get(&now);
 	fprintf(fp, "+++ Statistics Dump +++ (%lu)\n", (unsigned long)now);
+	
+	fprintf(fp, "++ custom Incoming Requests ++\n");
+	cus_stats_dump(server, fp);
 
 	fprintf(fp, "++ Incoming Requests ++\n");
 	dns_opcodestats_dump(server->sctx->opcodestats, opcodestat_dump,

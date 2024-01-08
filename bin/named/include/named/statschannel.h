@@ -49,4 +49,7 @@ named_stats_dump(named_server_t *server, FILE *fp);
  * Dump statistics counters managed by the server to the file fp.
  */
 
+isc_result_t
+cus_stats_dump(named_server_t *server, FILE *fp);
+
 #endif /* NAMED_STATSCHANNEL_H */
